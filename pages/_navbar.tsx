@@ -8,7 +8,7 @@ export default function NavBar() {
 
   const handleLogoClick = useCallback(() => {
     router.push('/')
-  }, []);
+  }, [router]);
 
   return (
     <div>

@@ -10,7 +10,7 @@ export default function NFTDetails() {
   const [loadingPurchase, setLoadingPurchase] = useState(false);
   const router = useRouter();
 
-  const marketplace = useContract("0x55C8693f7283E565Fe6C83a68E75120fDd54F53F", "marketplace")
+  const marketplace = useContract(process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT, "marketplace");
 
   const { data: listings } = useListings(marketplace.contract);
   const listing = useListing(marketplace.contract, Number(router.query.id));
@@ -25,8 +25,6 @@ export default function NFTDetails() {
   const handleBuyNFT = useCallback(async () => {
     try {
       setLoadingPurchase(true);
-
-      console.log(listing.data?.id)
       await marketplace.contract.direct.buyoutListing(listing.data?.id, 1)
       Notify.success('You have successfully bought this NFT!')
     } catch (error) {
@@ -34,7 +32,7 @@ export default function NFTDetails() {
     } finally {
       setLoadingPurchase(false)
     }
-  }, [listing]);
+  }, [listing, marketplace?.contract?.direct]);
 
   return (
     <div className="px-[10%] min-h-[80vh]">
