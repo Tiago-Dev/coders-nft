@@ -6,7 +6,7 @@ import { NFTCard } from "../components/NFTCard";
 export default function Home() {
   const [search, setSearch] = useState('');
 
-  const marketplace = useContract("0x55C8693f7283E565Fe6C83a68E75120fDd54F53F", "marketplace");
+  const marketplace = useContract(process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT, "marketplace");
   const { data: listings } = useListings(marketplace.contract);
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
